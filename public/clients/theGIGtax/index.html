@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/GigTax.css" asp-append-version="true" />
     
     <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
@@ -45,7 +46,7 @@
                                     <i class="fs-2 bi bi-filter dropdown-toggle pointer float-end" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"></i>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                         <li v-for="cat in PlatformCategories">
-                                            <span class="dropdown-item pointer" v-on:click="filterCategories(cat)"><i class="bi bi-check text-success fs-4" :style="[CategoryFilter.indexOf(cat) >= 0 ? 'visibility: visible' : 'visibility: hidden']"></i> {{cat}}</span>
+                                            <span class="dropdown-item pointer" v-on:click="filterCategories(cat)"><i class="bi bi-check text-success fs-4" :style="CategoryFilter.indexOf(cat) >= 0 ? 'visibility: visible' : 'visibility: hidden'"></i> {{cat}}</span>
                                         </li>
                                     </ul>
                                 </div>
@@ -53,7 +54,7 @@
                         </div>
                         <div class="row w-100 mb-5">
                             <template v-for="platform in Platforms">
-                                <div :class="'order-' + platform.Order + ' col-6 col-md-3 col-xxl-2 mx-auto'" :style="[showCategory(platform.Category) ? 'visibility: visible' : 'visibility: hidden']">
+                                <div :class="'order-' + platform.Order + ' col-6 col-md-3 col-xxl-2 mx-auto'" :style="showCategory(platform.Category) ? 'visibility: visible' : 'visibility: hidden'">
                                     <figure :class="[{ 'border border-primary border-5': platform.Selected }, 'figure pointer p-3']" v-on:click="selectPlatform(platform)">
                                         <img :src="platform.Thumbnail" class="figure-img img-fluid rounded platformThumbnail" :alt="platform.Name">
                                         <figcaption class="figure-caption">{{platform.Name}}</figcaption>
@@ -61,7 +62,9 @@
                                 </div>
                             </template>
                         </div>
-                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-bind:disabled="SelectedPlatforms.length <= 0" v-on:click="nextStep()">Continue</button>
+                        <div id="PlatformsButton">
+                            <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-bind:disabled="SelectedPlatforms.length <= 0" v-on:click="nextStep()">Continue</button>
+                        </div>
                     </template>
                     
                     <template v-if="CurrentStep.Id === 2">

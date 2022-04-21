@@ -269,6 +269,7 @@
                 Profit: null
             }
         ],
+        PlatformButtonTooltip: null,
         CategoryFilter: [],
         TaxStatus: 'Select...',
         TaxStatusOptions: [
@@ -304,6 +305,17 @@
         SelfEmploymentTax: 1800,
         FederalIncomeTax: 2500,
         EstimatedTaxPayment: 4300
+    },
+    watch: {
+        SelectedPlatforms: function (val) {
+            var self = this;
+            if (!val || val.length <= 0) {
+                self.PlatformButtonTooltip.enable();
+            }
+            else {
+                self.PlatformButtonTooltip.disable();
+            }
+        }
     },
     computed: {
         CurrentSection() {
@@ -461,6 +473,16 @@
             /*self.Platforms[i].Profit = self.formatDollars((self.Platforms[i].Id + 1) * 1000);*/
             self.Platforms[i].Profit = ((self.Platforms[i].Id + 1) * 1000);
         }
+
+        var existCondition = setInterval(function () {
+            if ($('#PlatformsButton').length) {
+                clearInterval(existCondition);
+                var el = document.getElementById('PlatformsButton');
+                self.PlatformButtonTooltip = new bootstrap.Tooltip(el, {
+                    title: 'Select one or more providers to continue.'
+                });
+            }
+        }, 100);
     }
 });
 
