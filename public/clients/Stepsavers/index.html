@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stepsavers</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.11.0.min.js"></script>
+<!-- Custom Theme files -->
+<!--theme-style-->
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all" />	
+<!--//theme-style-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!--fonts-->
+<link href='http://fonts.googleapis.com/css?family=Alegreya+Sans+SC:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+<!--//fonts-->
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript">
+					jQuery(document).ready(function($) {
+						$(".scroll").click(function(event){		
+							event.preventDefault();
+							$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+						});
+					});
+				</script>	
+<!-- start menu -->
+<script src="js/simpleCart.min.js"> </script>
+<link href="css/memenu.css" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="js/memenu.js"></script>
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>	
+<style>
+	.p-one.simpleCart_shelfItem img{
+		max-height:230px;
+		max-width:225px;
+		height:auto;
+		width:auto;
+	}
+	.abt-one img {
+		max-height:175px;
+		max-width:350px;
+		height:auto;
+		width:auto;
+	} 
+	.abt-one > a {
+		height: 175px;
+	}
+	.abt-shoe-left, .abt-one {
+		height:350px;
+	}
+	.abt-shoe-main {
+		margin-bottom: 40px;
+	}
+</style>			
+</head>
+<body> 
+	<!--top-header-->
+	<div class="top-header">
+	<div class="container">
+		<div class="top-header-main">
+			<div class="col-md-4 top-header-left">
+				<div class="search-bar" style="display:none;">
+					<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+					<input type="submit" value="">
+				</div>
+			</div>
+			<div class="col-md-4 top-header-middle">
+				<a href="index.html"><img style="max-height:65px;" src="images/1607d4e55e8bb8a4990c1be292161b20.jpg" alt="" /></a>
+			</div>
+			<div class="col-md-4 top-header-right">
+				<div class="cart box_1">
+						<a href="#">
+						<h3> <div class="total">
+							<span class="simpleCart_total"></span> (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>
+							<img src="images/cart-1.png" alt="" />
+						</a>
+						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>
+						<div class="clearfix"> </div>
+					</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</div>
+<!--top-header-->
+	<!--bottom-header-->
+	<div class="header-bottom">
+		<div class="container">
+			<div class="top-nav">
+				<ul class="memenu skyblue"><li class="active"><a href="index.html">Home</a></li>
+					<li class="grid"><a href="#">Shop</a>
+						<div class="mepanel">
+							<div class="row">
+								<div class="col1 me-one">
+									<h4>Wall Repair</h4>
+									<ul>
+										<li><a href="#">Stress Crack Tape</a></li>
+										<li><a href="#">Fast Patch</a></li>
+										<li><a href="#">Goof Patch</a></li>
+										<li><a href="#">Mini Patch</a></li>
+										<li><a href="#">Trump Wall Patch</a></li>
+									</ul>
+								</div>
+								<div class="col1 me-one">
+									<h4>Ceiling Repair</h4>
+									<ul>
+										<li><a href="#">Stress Crack Tape</a></li>
+										<li><a href="#">Goof-Light Patch</a></li>
+										<li><a href="#">Popcorn Ceiling Patch</a></li>
+									</ul>	
+								</div>
+								<div class="col1 me-one">
+									<h4>Self-Supporting Knee Pads</h4>
+									<ul>
+										<li><a href="#">Bradz Self-Supporting Knee Pads</a></li>
+									</ul>	
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="grid">
+						<a href="#">About Us</a>
+					</li>
+					<li class="grid">
+						<a href="#">Contact</a>
+					</li>
+					<li class="grid">
+						<a href="#">Product Videos</a>
+					</li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+	</div>
+	<!--bottom-header-->
+	<!--banner-starts-->
+	<div class="bnr" id="home">
+		<div  id="top" class="callbacks_container">
+			<ul class="rslides" id="slider4">
+			    <li>
+					<div class="banner-1"></div>
+				</li>
+				<li>
+					<div class="banner-2"></div>
+				</li>
+				<li>
+					<div class="banner-3"></div>
+				</li>
+			</ul>
+		</div>
+		<div class="clearfix"> </div>
+	</div>
+	<!--banner-ends--> 
+	<!--Slider-Starts-Here-->
+				<script src="js/responsiveslides.min.js"></script>
+			 <script>
+			    // You can also use "$(window).load(function() {"
+			    $(function () {
+			      // Slideshow 4
+			      $("#slider4").responsiveSlides({
+			        auto: true,
+			        pager: true,
+			        nav: false,
+			        speed: 500,
+			        namespace: "callbacks",
+			        before: function () {
+			          $('.events').append("<li>before event fired.</li>");
+			        },
+			        after: function () {
+			          $('.events').append("<li>after event fired.</li>");
+			        }
+			      });
+			
+			    });
+			  </script>
+	<div class="banner-bottom">
+		<div class="container">
+			<div class="banner-bottom-top" style="margin-bottom: 20px;">
+				<div class="col-md-6 banner-bottom-left">
+					<div class="bnr-one">
+						<div class="bnr-left">
+							<h2><a href="#">Bradz Knee Pads</a></h2>
+							<p>Self-Supporting knee pads allow the back of the knees to remain open resulting in all day comfort.</p>
+							<div class="b-btn"> 
+								<a href="#">SHOP NOW</a>
+							</div>
+						</div>
+						<div class="bnr-right"> 
+							<a href="#"><img style="height:150px;" src="images/QUFBRTIxODM4ODAyRkM0RDdFOEQ6YmVhYzAzYmYwZjBkY2E2OWM0ZjFlYzIwYWNlYmE4N2M6Ojo6OjA=.jpg" alt="" /></a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="col-md-6 banner-bottom-right">
+					<div class="bnr-two">
+						<div class="bnr-left">
+							<h2><a href="#">Popcorn Ceiling Patch</a></h2>
+							<p>No more need to mask and cover everything in the room in order to avoid the mess of spray texture.</p>
+							<div class="b-btn"> 
+								<a href="#">SHOP NOW</a>
+							</div>
+						</div>
+						<div class="bnr-right"> 
+							<a href="#"><img style="height:150px;" src="images/1a24838a2bd5882d403877d2bcb3fcf3.jpg" alt="" /></a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<div class="shoes"> 
+		<div class="container"> 
+			<div class="product-one">
+				<div class="col-md-3 product-left"> 
+					<div class="p-one simpleCart_shelfItem">							
+							<a href="#" style="height: 230px;display: block;">
+								<img src="images/1780ceea4828e4287ee55ef78b30586b.jpg" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Fast Patch</h4>
+						<h5>Pre-Textured</h5>
+						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$9.99</span></a></p>
+					
+					</div>
+				</div>
+				<div class="col-md-3 product-left"> 
+					<div class="p-one simpleCart_shelfItem">
+						
+						<a href="#" style="height: 230px;display: block;">
+								<img src="images/6898285e563d2dcae6965834c23a8deb.jpg" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Fast Patch</h4>
+						<h5>Smooth</h5>
+						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$9.99</span></a></p>
+						
+					</div>
+				</div>
+				<div class="col-md-3 product-left"> 
+					<div class="p-one simpleCart_shelfItem">
+						
+						<a href="#" style="height: 230px;display: block;">
+								<img src="images/84f7f8d3f0fafeca2b1bb0644c87beb1.jpg" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Stress Crack Tape</h4>
+						<h5>50' x 2" Roll</h5>
+						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$24.59</span></a></p>
+						
+					</div>
+				</div>
+				<div class="col-md-3 product-left"> 
+					<div class="p-one simpleCart_shelfItem">
+						
+						<a href="#" style="height: 230px;display: block;">
+								<img src="images/ee6dd724b3a37aacf1f59c8807c775fd.jpg" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Stress Crack Tape</h4>
+						<h5>60' x 1.25" Roll</h5>
+						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$22.89</span></a></p>
+						
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<div class="abt-shoe">
+		<div class="container"> 
+			<div class="abt-shoe-main">
+				<div class="col-md-4 abt-shoe-left">
+					<div class="abt-one">
+						<a href="#"><img src="images/Made-in-the-USA-blue-2.jpg" alt="" /></a>
+						<h4><a href="#">Made in the USA</a></h4>
+						<p>We USA manufacturer our entire wall repair product line, and will continue to do so. We are not interested in making a few more dollars by moving our patch line manufacturing over seas. </p>
+					</div>
+				</div>
+				<div class="col-md-4 abt-shoe-left">
+					<div class="abt-one">
+						<a href="#"><img src="images/0fc39a132e7501d33fa90e13e6053345.jpg" alt="" /></a>
+						<h4><a href="#">Handyman Approved</a></h4>
+						<p>The Handyman Club of America and HANDY magazine is a community of home enthusiasts sharing tips, projects & advice on home improvement, remodeling, landscaping, woodworking & more.</p>
+					</div>
+				</div>
+				<div class="col-md-4 abt-shoe-left">
+					<div class="abt-one">
+						<a href="https://www.youtube.com/playlist?list=PLDB2A93CF9DF28A63"><img src="images/youtubelogo.png" alt="" /></a>
+						<h4><a href="https://www.youtube.com/playlist?list=PLDB2A93CF9DF28A63">How-To Videos</a></h4>
+						<p>Visit our YouTube channel to view the complete library of Stepsavers instructional videos.</p>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--end-abt-shoe-->
+	<!--start-footer-->
+	<div class="footer">
+		<div class="container">
+			<div class="footer-top">
+				<div class="col-md-4 footer-left">
+					<h3>ABOUT US</h3>
+					<ul>
+						<li><a href="#">Who We Are</a></li>
+						<li><a href="#">Contact Us</a></li>
+						<li><a href="#">Our Sites</a></li>
+						<li><a href="#">In The News</a></li>
+						<li><a href="#">Team</a></li>					 
+					</ul>
+				</div>
+				<div class="col-md-4 footer-left">
+					<h3>CUSTOMER SERVICES</h3>
+					<ul>
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Shipping</a></li>
+						<li><a href="#">Cancellation</a></li>
+						<li><a href="#">Returns</a></li>
+						<li><a href="#">Bulk Orders</a></li>
+						<li><a href="#">Buying Guides</a></li>					 
+					</ul>
+				</div>
+				<div class="col-md-4 footer-left">
+					<h3>CATEGORIES</h3>
+					<ul>
+						<li><a href="#">Fast Patches</a></li>
+						<li><a href="#">Stress Crack Tape</a></li>
+						<li><a href="#">Knee Pads</a></li>			 
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	<!--end-footer-->
+	<!--end-footer-text-->
+	<div class="footer-text">
+		<div class="container">
+			<div class="footer-main">
+				<p class="footer-class">© 2018 Stepsaver Products </p>
+			</div>
+		</div>
+		<script type="text/javascript">
+									$(document).ready(function() {
+										/*
+										var defaults = {
+								  			containerID: 'toTop', // fading element id
+											containerHoverID: 'toTopHover', // fading element hover id
+											scrollSpeed: 1200,
+											easingType: 'linear' 
+								 		};
+										*/
+										
+										$().UItoTop({ easingType: 'easeOutQuart' });
+										
+									});
+								</script>
+		<a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	</div>
+	<!--end-footer-text-->	
+</body>
+</html>

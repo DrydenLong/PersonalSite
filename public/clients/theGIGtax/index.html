@@ -1,0 +1,382 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GigTax</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,800;1,400;1,500;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="css/GigTax.css" asp-append-version="true" />
+    
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div class="container-fluid vh-100">
+        <main role="main">
+            <div id="Wizard" class="row vh-100">
+                <div id="SideBar" class="col-3 px-5">
+                    <h3 class="text-light-gray mt-4"><img src="img/eye_logo.png" alt="GIG Tax Logo" class="d-inline" style="height: 45px;"/> <strong class="d-inline">theGIGtax</strong></h3>
+                    <ul class="mt-7 position-fixed">
+                        <li v-for="sideSection in Sections" :class="[{ active: sideSection.Active }, 'pointer']" v-on:click="changeSection(sideSection)">{{sideSection.Name}}</li>
+                    </ul>
+                </div>
+                <div class="col-9 d-flex flex-column align-items-center m-auto px-5 px-xxl-10 text-center" v-if="CurrentSection.Id === 0">
+                    <template v-if="CurrentStep.Id === 0">
+                        <h2 class="text-primary fw-bolder mb-5">Let's start by adding your sources of <span class="text-warning">gig income</span></h2>
+                        <p class="m-5 fs-4">This is really easy. Just select from our network of partner platforms.</p>
+                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Link gig income</button>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 1">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Select from our <span class="text-warning">partner platforms</span></h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12">
+                                <div class="dropdown">
+                                    <i class="fs-2 bi bi-filter dropdown-toggle pointer float-end" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"></i>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                        <li v-for="cat in PlatformCategories">
+                                            <span class="dropdown-item pointer" v-on:click="filterCategories(cat)"><i class="bi bi-check text-success fs-4" :style="[CategoryFilter.indexOf(cat) >= 0 ? 'visibility: visible' : 'visibility: hidden']"></i> {{cat}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <template v-for="platform in Platforms">
+                                <div :class="'order-' + platform.Order + ' col-6 col-md-3 col-xxl-2 mx-auto'" :style="[showCategory(platform.Category) ? 'visibility: visible' : 'visibility: hidden']">
+                                    <figure :class="[{ 'border border-primary border-5': platform.Selected }, 'figure pointer p-3']" v-on:click="selectPlatform(platform)">
+                                        <img :src="platform.Thumbnail" class="figure-img img-fluid rounded platformThumbnail" :alt="platform.Name">
+                                        <figcaption class="figure-caption">{{platform.Name}}</figcaption>
+                                    </figure>
+                                </div>
+                            </template>
+                        </div>
+                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-bind:disabled="SelectedPlatforms.length <= 0" v-on:click="nextStep()">Continue</button>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 2">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Ok, now let's <span class="text-warning">categorize your income</span> based on the nature of the work performed.</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <div class="mb-3 text-start" v-for="(platform, i) in SelectedPlatforms">
+                                    <label :for="'PlatformCategory' + i" class="form-label text-success"><strong>{{platform.Name}}</strong></label>
+                                    <select :id="'PlatformCategory' + i" class="form-select rounded-pill" :aria-label="platform.Name + ' Categories'" v-model="platform.SelectedCategory">
+                                        <option v-for="cat in PlatformCategories" v-bind:value="cat">{{cat}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 3">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Perfect! Now let's look at your expected <span class="text-warning">profit margins.</span></h2>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 col-md-6 mt-3 mt-xxl-0">
+                                <p>A <strong class="text-secondary">lower profit margin</strong> assumes you have more tax-deductible expenses and <strong class="text-secondary">will result in a lower estimate of taxes</strong> to be paid.</p>
+                            </div>
+                            <div class="col-12 col-md-6 mt-3 mt-xxl-0">
+                                <p>A <strong class="text-warning">higher profit margin</strong> assumes you have less tax-deductible expenses and <strong class="text-warning">will result in a higher estimate of taxes</strong> to be paid.</p>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12 mt-5 mt-xxl-0 px-10">
+                                <div class="mb-3 text-start" v-for="(platform, i) in SelectedPlatforms">
+                                    <label :for="'PlatformMargin' + i" class="form-label text-success"><strong>{{platform.Name}}</strong></label>
+                                    <formatted-input :id="'PlatformMargin' + i" class="form-control rounded-pill" :aria-label="platform.Name + ' Margin'" v-model="platform.Margin" format="percent" ></formatted-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 4">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Ok, as of {{TodaysDate}}, here's a summary of your <span class="text-warning">net profit</span> from gig work!</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12 mt-5 mt-xxl-0 px-10">
+                                <div class="mb-3 text-start" v-for="(platform, i) in SelectedPlatforms">
+                                    <label :for="'PlatformProfit' + i" class="form-label text-success"><strong>{{platform.Name}}</strong></label>
+                                    <formatted-input :id="'PlatformProfit' + i" class="form-control rounded-pill" :aria-label="platform.Name + ' Profit'" v-model="platform.Profit" format="dollar" ></formatted-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Finish Income</button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="row w-100">
+                        <div class="text-center">
+                            <div class="my-2">
+                                <div v-for="step in CurrentSection.Steps" :class="[{ active: step.Active }, 'd-inline-block bg-danger circle mx-3']"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center" v-if="CurrentStep.Id === 1">
+                        <div class="my-5">
+                            <p>Not seeing a platform you perform gig work through? <a href="#"><strong>Let us know!</strong></a> We're continuing to expand our partner network.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center" v-if="CurrentStep.Id === 3">
+                        <div class="my-5">
+                            <p><strong>Why do I need to do this?</strong> Your net profit (income less tax-deductible expenses) from gig work is a key driver of self-employment and income tax obligations so we need this to calculate an estimated tax payment.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-9 d-flex flex-column align-items-center m-auto px-5 px-xxl-10 text-center" v-if="CurrentSection.Id === 1">
+                    <template v-if="CurrentStep.Id === 0">
+                        <h2 class="text-primary fw-bolder mb-5"><span class="text-warning">Almost there!</span> We just need a bit more information.</h2>
+                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Let's go</button>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 1">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">What's your anticipated <span class="text-warning">tax filing status</span> this year?</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <div class="mb-3 text-start">
+                                    <label for="TaxStatus" class="form-label text-success"><strong>Tax Status</strong></label>
+                                    <select id="TaxStatus" class="form-select rounded-pill" aria-label="TaxStatus" v-model="TaxStatus">
+                                        <option v-for="status in TaxStatusOptions" v-bind:value="status" v-bind:disabled="status === 'Select...'">{{status}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 2">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5" v-if="TaxStatus !== 'Married filing jointly'">Do you have any <span class="text-warning">other sources of income</span> outside of the gig income linked here?</h2>
+                                <h2 class="text-primary fw-bolder mb-5" v-if="TaxStatus === 'Married filing jointly'">Do you or your spouse have any <span class="text-warning">other sources of income</span> outside of the gig income linked here?</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-6">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <div class="btn-group mb-3" role="group" aria-label="Do you have any other sources of income outside of the gig income linked here">
+                                    <button type="button" :class="[OtherIncome ? 'btn-success' : 'btn-outline-success', 'btn btn-lg rounded-pill']" v-on:click="OtherIncome = true"><strong>yes</strong></button>
+                                    <button type="button" :class="[OtherIncome ? 'btn-outline-success' : 'btn-success', 'btn btn-lg rounded-pill']" v-on:click="OtherIncome = false"><strong>no</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 3">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Ok, how much do you <span class="text-warning">anticipate earning</span> through those sources this year?</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12 mt-5 mt-xxl-0 px-10">
+                                <div class="mb-3 text-start">
+                                    <label for="AnticipatedOtherIncome" class="form-label text-success"><strong>Anticipated Earnings</strong></label>
+                                    <formatted-input id="AnticipatedOtherIncome" class="form-control rounded-pill" aria-label="Anticipated Earnings" v-model="AnticipatedEarnings" format="dollar" ></formatted-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 4">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Are you or an employer separately <span class="text-warning">withholding and remitting</span> taxes on that income?</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-6">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <div class="btn-group mb-3" role="group">
+                                    <button type="button" :class="[SeparateWithholding === true ? 'btn-success' : 'btn-outline-success', 'btn btn-lg rounded-pill']" v-on:click="SeparateWithholding = true"><strong>yes</strong></button>
+                                    <button type="button" :class="[SeparateWithholding === false ? 'btn-success' : 'btn-outline-success', 'btn btn-lg rounded-pill']" v-on:click="SeparateWithholding = false"><strong>no</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-6" v-show="SeparateWithholding === false">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <div class="btn-group mb-3" role="group">
+                                    <button type="button" :class="[IncludeSeparateWithholding ? 'btn-success' : 'btn-outline-success', 'btn btn-lg rounded-pill']" v-on:click="IncludeSeparateWithholding = true"><strong>yes</strong></button>
+                                    <button type="button" :class="[IncludeSeparateWithholding ? 'btn-outline-success' : 'btn-success', 'btn btn-lg rounded-pill']" v-on:click="IncludeSeparateWithholding = false"><strong>no</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 5">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Would you like to <span class="text-warning">include {{formatDollars(OtherIncome)}} of income</span> in our calculation of estimated taxes to be paid through here?</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-6">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <div class="btn-group mb-3" role="group">
+                                    <button type="button" :class="[IncludeSeparateWithholding ? 'btn-success' : 'btn-outline-success', 'btn btn-lg rounded-pill']" v-on:click="IncludeSeparateWithholding = true"><strong>yes</strong></button>
+                                    <button type="button" :class="[IncludeSeparateWithholding ? 'btn-outline-success' : 'btn-success', 'btn btn-lg rounded-pill']" v-on:click="IncludeSeparateWithholding = false"><strong>no</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                            </div>
+                        </div>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 6">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Awesome! <span class="text-warning">We're all done with your tax profile.</span> Now let's look at tax payments.</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Let's go</button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="row w-100">
+                        <div class="text-center">
+                            <div class="my-2">
+                                <div v-for="step in CurrentSection.Steps" :class="[{ active: step.Active }, 'd-inline-block bg-danger circle mx-3']"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center" v-if="CurrentStep.Footer">
+                        <div class="my-5" v-html="CurrentStep.Footer"></div>
+                    </div>
+                </div>
+
+                <div class="col-9 d-flex flex-column align-items-center m-auto px-5 px-xxl-10 text-center" v-if="CurrentSection.Id === 2">
+                    <template v-if="CurrentStep.Id === 0">
+                        <h2 class="text-primary fw-bolder">Estimated tax payments are due four times a year.</h2>
+                        <h2 class="text-primary fw-bolder mb-5">We'll send you a <span class="text-warning">notification 10 days before the next payment</span> is due so you can review and approve!</h2>
+                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 1">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">How would you like to <span class="text-warning">receive notifications?</span></h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <template v-for="noti in Notifications">
+                                <div class="col-6 col-md-3 col-xxl-2 mx-auto">
+                                    <figure :class="[{ 'border border-primary border-5': noti.Selected }, 'figure pointer p-3']" v-on:click="selectNotification(noti)">
+                                        <i :class="noti.IconClass + ' bi fs-1 figure-img img-fluid rounded'"></i>
+                                        <figcaption class="figure-caption">{{noti.Name}}</figcaption>
+                                    </figure>
+                                </div>
+                            </template>
+                        </div>
+                        <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue</button>
+                    </template>
+                    
+                    <template v-if="CurrentStep.Id === 2">
+                        <div class="row w-100">
+                            <div class="col-12 mt-5 mt-xxl-0 px-8">
+                                <h2 class="text-primary fw-bolder mb-5">Here's your <span class="text-warning">estimated tax payment</span> for the first quarter.</h2>
+                            </div>
+                        </div>
+                        <div class="row w-100 mb-5">
+                            <div class="col-12 mt-5 mt-xxl-0 px-10">
+                                <div class="mb-3 text-start">
+                                    <label for="SelfEmployTax" class="form-label text-success"><strong>Self-employment tax</strong></label>
+                                    <formatted-input id="SelfEmployTax" class="form-control rounded-pill" aria-label="SelfEmploymentTax" v-model="SelfEmploymentTax" format="dollar" readonly></formatted-input>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-5 mt-xxl-0 px-10">
+                                <div class="mb-3 text-start">
+                                    <label for="FederalIncomeTax" class="form-label text-success"><strong>Federal income tax</strong></label>
+                                    <formatted-input id="FederalIncomeTax" class="form-control rounded-pill" aria-label="FederalIncomeTax" v-model="FederalIncomeTax" format="dollar" readonly></formatted-input>
+                                </div>
+                            </div>
+                            <div class="col-12 mt-5 mt-xxl-0 px-10">
+                                <div class="mb-3 text-start">
+                                    <label for="EstimatedTaxPayment" class="form-label text-warning"><strong>Total estimated tax payment</strong></label>
+                                    <formatted-input id="EstimatedTaxPayment" class="form-control rounded-pill" aria-label="EstimatedTaxPayment" v-model="EstimatedTaxPayment" format="dollar" readonly></formatted-input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-secondary rounded-pill px-4 py-2 fs-4 fw-bolder mb-5" v-on:click="nextStep()">Continue to payment</button>
+                            </div>
+                        </div>
+                    </template>
+
+                    <div class="row w-100">
+                        <div class="text-center">
+                            <div class="my-2">
+                                <div v-for="step in CurrentSection.Steps" :class="[{ active: step.Active }, 'd-inline-block bg-danger circle mx-3']"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center" v-if="CurrentStep.Footer">
+                        <div class="my-5" v-html="CurrentStep.Footer"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/site.js" asp-append-version="true"></script>
+</body>
+</html>
