@@ -1,0 +1,137 @@
+html {
+    font-size: 14px;
+    background-color: #196E63 !important;
+    /*background-color: #006157;*/
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #196E63 !important;
+}
+
+.text-blue {
+    color: #2E4494 !important;
+}
+
+.ul-warning {
+    list-style: none;
+}
+
+.ul-warning li::before {
+    content: "\2022";
+    color: #ff9e7a;
+    font-weight: bolder;
+    font-size: 24px;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+@media (min-width: 768px) {
+    .nav-underline .active {
+        border-bottom: 4px solid;
+        border-image: linear-gradient(to right, transparent 20%, transparent 20% 30%, rgba(246, 246, 246, 0.4) 30% 70%, transparent 70% 80%, transparent 80%) 100% 1;
+    }
+}
+
+
+@media (min-width: 576px) {
+    .w-sm-25 {
+        width: 25% !important;
+    }
+
+    .w-sm-50 {
+        width: 50% !important;
+    }
+
+    .w-sm-75 {
+        width: 75% !important;
+    }
+
+    .w-sm-100 {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 768px) {
+    .w-md-25 {
+        width: 25% !important;
+    }
+
+    .w-md-50 {
+        width: 50% !important;
+    }
+
+    .w-md-75 {
+        width: 75% !important;
+    }
+
+    .w-md-100 {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .w-lg-25 {
+        width: 25% !important;
+    }
+
+    .w-lg-50 {
+        width: 50% !important;
+    }
+
+    .w-lg-75 {
+        width: 75% !important;
+    }
+
+    .w-lg-100 {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 1200px) {
+    .w-xl-25 {
+        width: 25% !important;
+    }
+
+    .w-xl-50 {
+        width: 50% !important;
+    }
+
+    .w-xl-75 {
+        width: 75% !important;
+    }
+
+    .w-xl-100 {
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 1400px) {
+    .w-xxl-25 {
+        width: 25% !important;
+    }
+
+    .w-xxl-50 {
+        width: 50% !important;
+    }
+
+    .w-xxl-75 {
+        width: 75% !important;
+    }
+
+    .w-xxl-100 {
+        width: 100% !important;
+    }
+}
