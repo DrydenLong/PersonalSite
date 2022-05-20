@@ -20,6 +20,7 @@
                 Selected: false
             }
         ],
+        SelectedAccount: null,
         Partners: [
             {
                 Name: 'wealthfront',
@@ -42,6 +43,7 @@
                 Selected: false
             }
         ],
+        SelectedPartner: null,
         Savings: [
             {
                 Label: 'Select a percentage of earnings to save each month',
@@ -67,9 +69,30 @@
         }
     },
     methods: {
-        chooseSavingsType: function() {
+        selectAccount(account) {
             var self = this;
-            if(self.Savings[0].Selected) {
+            for (var i = 0; i < self.Accounts.length; i++) {
+                self.Accounts[i].Selected = false;
+            }
+            account.Selected = true;
+        },
+        selectPartner(partner) {
+            var self = this;
+            for (var i = 0; i < self.Partners.length; i++) {
+                self.Partners[i].Selected = false;
+            }
+            partner.Selected = true;
+        },
+        selectSavingsType: function(savings) {
+            var self = this;
+            for (var i = 0; i < self.Savings.length; i++) {
+                self.Savings[i].Selected = false;
+            }
+            savings.Selected = true;
+        },
+        getSavingsNextStep: function () {
+            var self = this;
+            if (self.Savings[0].Selected) {
                 self.CurrentStep = 4;
             }
             else {

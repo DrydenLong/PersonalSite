@@ -66,7 +66,7 @@
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 text-center mb-3" v-for="account in Accounts">
-                    <div :class="[account.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="account.Selected = !account.Selected">
+                    <div :class="[account.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="selectAccount(account)">
                         <h4 class="py-4">{{account.Name}}</h4>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="row">
                 <div class="col-12 col-lg-6 text-center mb-3" v-for="partner in Partners">
-                    <div :class="[partner.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="partner.Selected = !partner.Selected">
+                    <div :class="[partner.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="selectPartner(partner)">
                         <img :src="partner.Logo" :alt="partner.Name" class="py-1" style="max-height: 100px;" />
                     </div>
                 </div>
@@ -105,14 +105,14 @@
             </div>
             <div class="row">
                 <div class="col-12 col-lg-4 offset-lg-4 text-center mb-3" v-for="saving in Savings">
-                    <div :class="[saving.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="saving.Selected = !saving.Selected">
+                    <div :class="[saving.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="selectSavingsType(saving)">
                         <h5 class="py-4 px-2">{{saving.Label}}</h5>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 text-center">
-                    <button type="button" class="btn btn-lg btn-info rounded-4 px-5 mt-2" v-on:click="chooseSavingsType()">Continue</button>
+                    <button type="button" class="btn btn-lg btn-info rounded-4 px-5 mt-2" v-on:click="getSavingsNextStep()">Continue</button>
                 </div>
             </div>
         </div>
