@@ -24,7 +24,7 @@
             <header class="mb-5 ">
                 <nav class="navbar navbar-expand-lg navbar-dark bg-transparent pt-0">
                     <div class="container-fluid px-0">
-                        <button class="navbar-toggler me-2" type="button" data-bs-toggle="collapse" data-bs-target="#NavBar">
+                        <button class="navbar-toggler mx-2" type="button" data-bs-toggle="collapse" data-bs-target="#NavBar">
                             <span class="navbar-toggler-icon"></span>
                         </button>
                         <a class="navbar-brand w-lg-25 pt-0" href="../index.html">
@@ -56,7 +56,7 @@
             </header>
         </div>
     </div>
-    <div id="OpenNewAccount" class="row">
+    <div id="OpenNewAccount" class="row pb-3">
         <div class="col-12 col-lg-6 offset-lg-3" v-if="CurrentStep === 1">
             <div class="row">
                 <div class="col-12 text-center text-white pt-3 pb-5">
@@ -65,7 +65,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 text-center mb-3" v-for="account in Accounts">
+                <div class="col-12 col-lg-6 text-center mb-3" v-for="account in Accounts">
                     <div :class="[account.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="account.Selected = !account.Selected">
                         <h4 class="py-4">{{account.Name}}</h4>
                     </div>
@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 text-center mb-3" v-for="partner in Partners">
+                <div class="col-12 col-lg-6 text-center mb-3" v-for="partner in Partners">
                     <div :class="[partner.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="partner.Selected = !partner.Selected">
                         <img :src="partner.Logo" :alt="partner.Name" class="py-1" style="max-height: 100px;" />
                     </div>
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 offset-lg-4 text-center mb-3" v-for="saving in Savings">
+                <div class="col-12 col-lg-4 offset-lg-4 text-center mb-3" v-for="saving in Savings">
                     <div :class="[saving.Selected ? 'bg-danger text-light' : 'bg-light text-danger', 'text-center mb-3 rounded-max']" style="cursor: pointer;" v-on:click="saving.Selected = !saving.Selected">
                         <h5 class="py-4 px-2">{{saving.Label}}</h5>
                     </div>
@@ -123,7 +123,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 offset-lg-4 text-center mb-3">
+                <div class="col-12 col-lg-4 offset-lg-4 text-center mb-3">
                     <formatted-input id="SavingsPercent" class="form-control form-control-lg bg-danger text-light text-center mb-3 rounded-max h1" style="height: 100px; font-size: 2.5rem; font-weight: bolder;" aria-label="SavingsPercent" v-model="SavingsPercent" format="percent"></formatted-input>
                 </div>
             </div>
@@ -152,7 +152,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-4 offset-lg-4 text-center mb-3">
+                <div class="col-12 col-lg-4 offset-lg-4 text-center mb-3">
                     <formatted-input id="SavingsAmount" class="form-control form-control-lg bg-danger text-light text-center mb-3 rounded-max h1" style="height: 100px; font-size: 2.5rem; font-weight: bolder;" aria-label="SavingsAmount" v-model="SavingsAmount" format="dollar"></formatted-input>
                 </div>
             </div>
